@@ -1,104 +1,217 @@
-/* CSS Variables for Theme Management */
+/* Theme Variables - Light Mode */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --color-primary: #1976d2; /* requested primary */
+  --color-accent: #ffd600;  /* requested accent */
+  --color-secondary: #eeeeee; /* requested secondary */
+  --bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Base App layout */
+.App.ttt-app {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: radial-gradient(1200px 800px at 50% -10%, #f9fbff, #ffffff) no-repeat;
+  color: var(--text);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: start;
+  justify-items: center;
+  gap: 16px;
+  padding: 32px 16px 24px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+/* Header and Title */
+.ttt-header {
+  width: 100%;
+  max-width: 720px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px;
+}
+
+.ttt-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--color-primary);
+}
+
+/* Player indicators */
+.ttt-players {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  color: var(--muted);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.player-indicator .player-symbol {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  font-weight: 800;
+  color: #fff;
+  background: var(--color-primary);
+}
+
+.player-indicator .player-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.player-indicator.active {
+  color: #111827;
+  transform: translateY(-1px);
+  border-color: rgba(25, 118, 210, 0.25);
+  box-shadow: 0 8px 26px rgba(25,118,210,0.14);
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.player-indicator .player-active-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255,214,0,0.25);
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+/* Main board container */
+.ttt-main {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+}
+
+/* Board grid */
+.board {
+  width: min(92vw, 360px);
+  aspect-ratio: 1/1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: linear-gradient(180deg, #f7faff 0%, #f8f9fb 100%);
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+/* Squares */
+.square {
+  border: 1px solid #e6eef8;
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: clamp(28px, 7vw, 42px);
+  display: grid;
+  place-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.05s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.04);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.square:hover {
+  transform: translateY(-1px);
+  border-color: rgba(25,118,210,0.35);
+  box-shadow: 0 10px 24px rgba(25,118,210,0.12);
 }
 
-.theme-toggle:active {
+.square:disabled {
+  cursor: default;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+/* Distinguish X and O slightly */
+.square-X {
+  color: var(--color-primary);
+}
+.square-O {
+  color: #0f766e; /* calm teal for O */
+}
+
+/* Highlight winning line */
+.square-win {
+  background: linear-gradient(135deg, rgba(25,118,210,0.10), rgba(255,214,0,0.14));
+  border-color: rgba(25,118,210,0.45);
+  box-shadow: 0 10px 28px rgba(25,118,210,0.18);
+}
+
+/* Footer status and controls */
+.ttt-footer {
+  width: 100%;
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+}
+
+.ttt-status {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Buttons */
+.ttt-btn {
+  appearance: none;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.05s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.ttt-btn:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ttt-btn-restart {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 12px 22px rgba(25,118,210,0.25);
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+.ttt-btn-restart:hover {
+  box-shadow: 0 16px 30px rgba(25,118,210,0.28);
+  filter: brightness(1.02);
+}
+
+/* Responsiveness */
+@media (max-width: 420px) {
+  .ttt-footer {
+    grid-template-columns: 1fr;
+  }
+  .ttt-btn-restart {
+    width: 100%;
   }
 }
